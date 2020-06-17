@@ -1,33 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class BeerList extends Component{
+function BeerList (props){
 
-    constructor(props){
-
-        super(props);
-
-        this.state = {
-
-        }
-
-    }
-
-render(){
-    
+    console.log("This is from beerlist.js = ", props.beer);
     return(
         <div>
-
              <h3>The Beer List</h3>
-                <ul>
-                   {/* <li>{props.beer}</li> */}
-                </ul>
+             {/* <div><ul>{props.beer.map(item => <li key={item}>{item}</li>)}</ul></div> */}
+               
         </div>
         
     );
 }
 
-
-
-}
 
 export default BeerList;

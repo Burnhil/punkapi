@@ -1,66 +1,60 @@
-import React, { Component, useReducer } from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import BeerList from './BeerList.js';
+import BeerPanel from './BeerPanel.js'
 
 class App extends Component {
 
   constructor(props){
     super(props);
-    this.state = {
-      beer: [],
-      
-    }
-  }
-  
-  // fetchData = () => {
 
-  //   fetch('https://api.punkapi.com/v2/beers')
-  //   .then(res => res.json())
-  //   .then(res => {
-  //       res.map(user => {
-  //           console.log(`${user.id}: ${user.name}`); 
-  //           this.state.beer[user] =  `{${user.id}: ${user.name}}`;      
-  //       });      
-  //   });
-  // };
+    this.state= {
+      theBeers: []
+    };
+  }
+
+  //get the data
 
   fetchData(){
-    fetch('https://api.punkapi.com/v2/beers')
-    .then(res => res.json())
-    .then(res => res.map(item => (
-        {
-            id: `${item.id}`,
-            name: `${item.name}`,
-            description: `${item.description}`,
-            image_url: `${item.image_url}`
+    //use fetch funtion and callback to transform the data to the JSON structure
+    fetch("https://api.punkapi.com/v2/beers")
+    .then(response => response.json())      //transform the text data to json which comes back as a promise use then() to continue
+    .then((theseBeers) => {                 // store json data in state
+      this.setState({
+        theBeers: theseBeers,
+      },
+    ()=> {
+      //for checking purposes, use optional second argument ot pass a funtion to see if state changed
+      console.log(`the beers retrieved are ${this.state.theBeers}`);
 
-        }
-    )))
-    .then(beer => this.setState({
-        beer,
-    }))
-    .catch(error => console.log('parsing failed', error))
-    
-}
-
-  render(){
-    //this.fetchData();
-    console.log(" this is beer[] = ",this.state.beer);
-    // console.log(this.state.beer.length);
-
-  return (
-    <div className="App">
-      <header className="App-header">
-
-        <h1>Fetching Data <button className="btn btn-sm btn-danger" onClick={(e) => {
-                        this.fetchData();    
-                    }}>Fetch now</button></h1>
-       </header>
-
-       <BeerList item = {[this.state.beer]}/>
-    </div>
-  );
+    });
+  });
   }
+
+  //use the react method componetdidmoutn() for retrieving data
+  componentDidMount(){
+    // call you fetchdata()
+    this.fetchData();
+  }
+
+  likesButton = () =>{
+    console.log("button was clicked");
+  }
+
+  render(){ 
+    // build all 25 beer panels
+    let theBeerPanels = [];
+    for(let i = 0; i < this.state.theBeers.length; i++){
+      theBeerPanels.push(<BeerPanel beer={this.state.theBeers[i]} />);
+    }
+    return (
+    <div className="App">
+      
+      {theBeerPanels}
+      
+
+    </div>
+  );}
+
 }
 
 export default App;
