@@ -174,7 +174,7 @@ const BeerPanel = (props) =>{
             }
         }
 
-    return <div className="eachPanel">
+    return <div >
                 <ul><h1 className="headers1">The Beer Info</h1>{topLevelListItems}</ul>
                 <BoilVolumeList boil_volume={props.beer.boil_volume} />
                 <FoodParingList food_pairing={props.beer.food_pairing} />

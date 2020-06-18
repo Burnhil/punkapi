@@ -8,7 +8,8 @@ class App extends Component {
     super(props);
 
     this.state= {
-      theBeers: []
+      theBeers: [],
+      likes: null
     };
   }
 
@@ -37,14 +38,16 @@ class App extends Component {
   }
 
   likesButton = () =>{
-    console.log("button was clicked");
+
+    let updateLikes = this.state.likes + 1;
+    this.setState({likes: updateLikes})
   }
 
   render(){ 
     // build all 25 beer panels
     let theBeerPanels = [];
     for(let i = 0; i < this.state.theBeers.length; i++){
-      theBeerPanels.push(<BeerPanel beer={this.state.theBeers[i]} />);
+    theBeerPanels.push(<div className="eachPanel"><BeerPanel beer={this.state.theBeers[i]} /><button onClick={()=>this.likesButton()}>Like {this.state.likes}</button></div>);
     }
     return (
     <div className="App">
